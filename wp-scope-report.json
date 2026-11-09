@@ -1,1 +1,56 @@
-[]
+[
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Frontend/CheckoutController.php",
+        "line": 25,
+        "type": "Unauthenticated AJAX (wp_ajax_nopriv)",
+        "code": "add_action( 'wp_ajax_nopriv_gatefuz_process_checkout', [ $this, 'ajax_process_checkout' ] );"
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php",
+        "line": 74,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response = wp_remote_post( $this->getApiBaseUrl() . '/v1/oauth2/token', ["
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php",
+        "line": 121,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response   = wp_remote_post( $captureUrl, ["
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php",
+        "line": 214,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response = wp_remote_post( $this->getApiBaseUrl() . '/v1/notifications/verify-webhook-signature', ["
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php",
+        "line": 93,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response = wp_remote_post( 'https://api.mollie.com/v2/payments', ["
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php",
+        "line": 131,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response = wp_remote_get( 'https://api.mollie.com/v2/payments/' . rawurlencode( $paymentId ), ["
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php",
+        "line": 147,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response = wp_remote_get( 'https://api.mollie.com/v2/payments/' . $paymentId, ["
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/StripeGateway.php",
+        "line": 145,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response = wp_remote_post( $url, ["
+    },
+    {
+        "file": "/root/wp-audit/src/gate-fuz/src/Gateways/PaystackGateway.php",
+        "line": 88,
+        "type": "Potential SSRF (wp_remote_get/post)",
+        "code": "$response  = wp_remote_get( $verifyUrl, ["
+    }
+]

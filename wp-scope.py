@@ -7,6 +7,7 @@ import argparse
 import urllib.request
 import zipfile
 from pathlib import Path
+from datetime import datetime
 
 class Colors:
     HEADER = '\033[95m'
@@ -64,16 +65,63 @@ def scan_file(filepath):
                             "type": name,
                             "code": line.strip()[:100]
                         })
-    except Exception as e:
+    except Exception:
         pass
     return findings
+
+def generate_html_report(findings, output_path):
+    html_content = f"""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>WP-Scope Security Report</title>
+        <style>
+            body {{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }}
+            .container {{ max-width: 1000px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }}
+            h1 {{ color: #2c3e50; text-align: center; }}
+            .meta {{ text-align: center; color: #7f8c8d; margin-bottom: 20px; }}
+            .finding {{ background: #fff3cd; border-left: 5px solid #ffc107; padding: 15px; margin-bottom: 15px; border-radius: 4px; }}
+            .finding h3 {{ margin-top: 0; color: #856404; }}
+            .code {{ background: #2d2d2d; color: #f8f8f2; padding: 10px; border-radius: 4px; font-family: monospace; overflow-x: auto; }}
+            .clean {{ background: #d4edda; border-left: 5px solid #28a745; padding: 15px; color: #155724; border-radius: 4px; text-align: center; font-weight: bold; }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>WP-Scope Vulnerability Report</h1>
+            <div class="meta">Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</div>
+    """
+    
+    if not findings:
+        html_content += '<div class="clean">✅ No suspicious patterns found. The plugin looks clean!</div>'
+    else:
+        html_content += f"<h2>Total Findings: {len(findings)}</h2>"
+        for f in findings:
+            html_content += f"""
+            <div class="finding">
+                <h3>{f['type']}</h3>
+                <p><strong>File:</strong> {f['file']} <strong>(Line {f['line']})</strong></p>
+                <div class="code">{f['code']}</div>
+            </div>
+            """
+            
+    html_content += """
+        </div>
+    </body>
+    </html>
+    """
+    
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(html_content)
 
 def main():
     parser = argparse.ArgumentParser(description="WP-Scope - Advanced WordPress Plugin Vulnerability Scanner")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("-d", "--directory", help="Path to the local plugin directory")
-    group.add_argument("-p", "--plugin", help="WordPress plugin slug (e.g., contact-form-7) to download and scan")
+    group.add_argument("-p", "--plugin", help="WordPress plugin slug to download and scan")
     parser.add_argument("-o", "--output", help="Output JSON report file", default="wp-scope-report.json")
+    parser.add_argument("--html", help="Output HTML report file", default="wp-scope-report.html")
     args = parser.parse_args()
 
     target_dir = args.directory if args.directory else download_plugin(args.plugin)
@@ -108,8 +156,12 @@ def main():
 
     # JSON Report
     with open(args.output, 'w') as outfile:
-        json.dump(all_findings, outfile, indent=4)
+        json.dump(all_findings, outfile, indent=4, default=str)
     print(f"{Colors.GREEN}[+] JSON report saved to {args.output}{Colors.ENDC}")
+
+    # HTML Report
+    generate_html_report(all_findings, args.html)
+    print(f"{Colors.GREEN}[+] HTML report saved to {args.html}{Colors.ENDC}")
 
 if __name__ == "__main__":
     main()
