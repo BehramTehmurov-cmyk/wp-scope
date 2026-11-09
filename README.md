@@ -1,16 +1,29 @@
-# WP-Scope (WordPress Vulnerability Scanner)
+# 🛡️ WP-Scope (WordPress Vulnerability Scanner)
 
-WP-Scope is a lightweight static analysis tool designed for security researchers. 
-It helps identify potential vulnerabilities in WordPress plugins by scanning for dangerous functions and missing security checks.
+**WP-Scope** is a fast, lightweight static analysis tool designed for security researchers. It helps identify potential vulnerabilities in WordPress plugins by scanning for dangerous functions, missing security checks, and SSRF vectors.
 
-## Features
-- Detects unauthenticated AJAX handlers (wp_ajax_nopriv)
-- Finds unprepared SQL queries
-- Flags dangerous file operations (file_get_contents, eval)
-- Checks for CSRF/IDOR risks (missing nonces)
+## ✨ Features
+- **Auto-Download**: Automatically downloads the latest plugin version from WordPress.org.
+- **Dangerous Functions**: Detects eval, system, exec, shell_exec.
+- **CSRF/IDOR**: Flags unauthenticated AJAX handlers (wp_ajax_nopriv).
+- **SSRF**: Detects external HTTP requests (wp_remote_get/post).
+- **Object Injection**: Flags unserialize() usage.
+- **Beautiful Reports**: Generates both JSON and a beautiful HTML report.
 
-## Usage
+## 🚀 Installation
+git clone https://github.com/BehramTehmurov-cmyk/wp-scope.git
+cd wp-scope
+
+## 🛠️ Usage
+Scan a local directory:
 python3 wp-scope.py -d /path/to/plugin
 
-## Disclaimer
-This tool is for educational purposes and ethical security research only.
+Auto-download and scan a plugin from WordPress.org:
+python3 wp-scope.py -p contact-form-7
+
+## 📊 Output
+- wp-scope-report.json (For automation)
+- wp-scope-report.html (For visual review)
+
+## ⚠️ Disclaimer
+This tool is for educational purposes and ethical security research only. Always get permission before testing third-party sites.
