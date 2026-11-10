@@ -8,102 +8,85 @@
             body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; color: #333; margin: 0; padding: 20px; }
             .container { max-width: 1000px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
             h1 { color: #2c3e50; text-align: center; }
+            .meta { text-align: center; color: #7f8c8d; margin-bottom: 20px; font-size: 14px; }
             .summary { display: flex; justify-content: space-around; margin-bottom: 20px; padding: 15px; background: #e9ecef; border-radius: 8px; }
             .summary-item { font-size: 18px; font-weight: bold; }
-            .filters { text-align: center; margin-bottom: 20px; }
-            .filters button { padding: 8px 16px; margin: 0 5px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-            .btn-all { background: #6c757d; color: white; }
-            .btn-high { background: #dc3545; color: white; }
-            .btn-medium { background: #fd7e14; color: white; }
-            .finding { background: #fff; border-left: 5px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: block; }
-            .code { background: #2d2d2d; color: #f8f8f2; padding: 10px; border-radius: 4px; font-family: monospace; overflow-x: auto; }
+            .finding { background: #fff; border-left: 5px solid #ccc; padding: 15px; margin-bottom: 15px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+            .code { background: #2d2d2d; color: #f8f8f2; padding: 10px; border-radius: 4px; font-family: monospace; overflow-x: auto; font-size: 13px; }
             .severity { display: inline-block; padding: 3px 8px; border-radius: 4px; color: white; font-size: 12px; font-weight: bold; margin-left: 10px; }
             .clean { background: #d4edda; border-left: 5px solid #28a745; padding: 15px; color: #155724; border-radius: 4px; text-align: center; font-weight: bold; }
         </style>
-        <script>
-            function filter(severity) {
-                const items = document.querySelectorAll('.finding');
-                items.forEach(item => {
-                    if (severity === 'ALL' || item.getAttribute('data-severity') === severity) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
-            }
-        </script>
     </head>
     <body>
         <div class="container">
-            <h1>WP-Scope Security Report</h1>
+            <h1>🛡️ WP-Scope Security Report</h1>
+            <div class="meta">
+                <strong>Target:</strong> /root/wp-audit/src/gate-fuz <br>
+                <strong>Generated on:</strong> 2026-11-10 13:35:25
+            </div>
             <div class="summary">
+                <div class="summary-item" style="color: #8b0000;">CRITICAL: 0</div>
                 <div class="summary-item" style="color: #dc3545;">HIGH: 2</div>
                 <div class="summary-item" style="color: #fd7e14;">MEDIUM: 8</div>
             </div>
     
-            <div class="filters">
-                <button class="btn-all" onclick="filter('ALL')">Show All</button>
-                <button class="btn-high" onclick="filter('HIGH')">High Only</button>
-                <button class="btn-medium" onclick="filter('MEDIUM')">Medium Only</button>
-            </div>
-        
-            <div class="finding" data-severity="HIGH" style="border-left-color: #dc3545;">
+            <div class="finding" style="border-left-color: #dc3545;">
                 <h3>Unauthenticated AJAX (wp_ajax_nopriv) <span class="severity" style="background-color: #dc3545;">HIGH</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Frontend/CheckoutController.php <strong>(Line 25)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Frontend/CheckoutController.php</code> <strong>(Line 25)</strong></p>
                 <div class="code">add_action( 'wp_ajax_nopriv_gatefuz_process_checkout', [ $this, 'ajax_process_checkout' ] );</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php <strong>(Line 74)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php</code> <strong>(Line 74)</strong></p>
                 <div class="code">$response = wp_remote_post( $this->getApiBaseUrl() . '/v1/oauth2/token', [</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php <strong>(Line 121)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php</code> <strong>(Line 121)</strong></p>
                 <div class="code">$response   = wp_remote_post( $captureUrl, [</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php <strong>(Line 214)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/PayPalGateway.php</code> <strong>(Line 214)</strong></p>
                 <div class="code">$response = wp_remote_post( $this->getApiBaseUrl() . '/v1/notifications/verify-webhook-signature', [</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php <strong>(Line 93)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php</code> <strong>(Line 93)</strong></p>
                 <div class="code">$response = wp_remote_post( 'https://api.mollie.com/v2/payments', [</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php <strong>(Line 131)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php</code> <strong>(Line 131)</strong></p>
                 <div class="code">$response = wp_remote_get( 'https://api.mollie.com/v2/payments/' . rawurlencode( $paymentId ), [</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php <strong>(Line 147)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/MollieGateway.php</code> <strong>(Line 147)</strong></p>
                 <div class="code">$response = wp_remote_get( 'https://api.mollie.com/v2/payments/' . $paymentId, [</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/StripeGateway.php <strong>(Line 145)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/StripeGateway.php</code> <strong>(Line 145)</strong></p>
                 <div class="code">$response = wp_remote_post( $url, [</div>
             </div>
             
-            <div class="finding" data-severity="MEDIUM" style="border-left-color: #fd7e14;">
+            <div class="finding" style="border-left-color: #fd7e14;">
                 <h3>Potential SSRF (wp_remote_get/post) <span class="severity" style="background-color: #fd7e14;">MEDIUM</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Gateways/PaystackGateway.php <strong>(Line 88)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Gateways/PaystackGateway.php</code> <strong>(Line 88)</strong></p>
                 <div class="code">$response  = wp_remote_get( $verifyUrl, [</div>
             </div>
             
-            <div class="finding" data-severity="HIGH" style="border-left-color: #dc3545;">
+            <div class="finding" style="border-left-color: #dc3545;">
                 <h3>SQL Injection (wpdb->query) <span class="severity" style="background-color: #dc3545;">HIGH</span></h3>
-                <p><strong>File:</strong> /root/wp-audit/src/gate-fuz/src/Services/TransactionManager.php <strong>(Line 206)</strong></p>
+                <p><strong>File:</strong> <code>/root/wp-audit/src/gate-fuz/src/Services/TransactionManager.php</code> <strong>(Line 206)</strong></p>
                 <div class="code">return (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table} {$where}" );</div>
             </div>
             
